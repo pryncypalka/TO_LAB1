@@ -1,7 +1,8 @@
 
 
 class Collection:
-    def __init__(self, ):
+
+    def __init__(self):
         self._col = []
 
     def get_item(self, currency):
@@ -15,7 +16,7 @@ class Collection:
             if item.equals(currency):
                 self._col.remove(item)
                 return True
-        return False 
+        return False
 
     def add_item(self, currency):
         if not self.get_item(currency):
@@ -26,3 +27,8 @@ class Collection:
             self.remove_item(currency)
         self.add_item(currency)
 
+    def get_curr_names(self):
+        currency_names = []
+        for currency in self._col:
+            currency_names.append(currency.get_name())
+        return currency_names

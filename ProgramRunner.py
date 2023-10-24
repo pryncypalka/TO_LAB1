@@ -1,9 +1,8 @@
 import DataProvider
 import Format
-import Collection as coll
-import Currency as Curr
-import TkApp as TA
-
+import Exchange
+import tkinter as tk
+import TkApp
 
 class ProgramRunner:
     _instance = None
@@ -23,9 +22,13 @@ class ProgramRunner:
     def run_app(self):
         dp1 = DataProvider.DataProvider()
         dp1.url = "https://www.nbp.pl/kursy/xml/lasta.xml"
-
         format1 = Format.Format(dp1.get_data())
         collection1 = format1.get_collection()
+        exchange1 = Exchange.Exchange()
+        root = tk.Tk()
+        app = TkApp.TkApp(root, collection1, exchange1)
+        root.mainloop()
+
 
 
 

@@ -1,16 +1,19 @@
-import tkinter as tk
-import Collection as coll
+
+
 
 from tkinter import ttk
 
 class TkApp:
-    def __init__(self, root):
+    def __init__(self, root, collection, exchange):
+        self.currency_names = collection.get_curr_names()
+        self.exchange = exchange
         self.root = root
+        self.collection = collection
         root.title("Kalkulator Walutowy")
 
         self.label_currency1 = ttk.Label(root, text="Waluta 1:")
         self.label_currency1.grid(row=0, column=0)
-        self.currency1 = ttk.Combobox(root, values=list(self.exchange_rates.keys()))
+        self.currency1 = ttk.Combobox(root, values=self.currency_names)
         self.currency1.grid(row=0, column=1)
         self.currency1.set("PLN")
         self.currency1.bind("<<ComboboxSelected>>", self.update_conversion)
@@ -18,7 +21,7 @@ class TkApp:
         # Wybór drugiej waluty
         self.label_currency2 = ttk.Label(root, text="Waluta 2:")
         self.label_currency2.grid(row=1, column=0)
-        self.currency2 = ttk.Combobox(root, values=list(self.exchange_rates.keys()))
+        self.currency2 = ttk.Combobox(root, values=self.currency_names)
         self.currency2.grid(row=1, column=1)
         self.currency2.set("USD")
         self.currency2.bind("<<ComboboxSelected>>", self.update_conversion)
@@ -37,22 +40,17 @@ class TkApp:
         self.result = ttk.Label(root, text="")
         self.result.grid(row=3, column=1)
 
-    def get_currency_names_from_collection(self):
-        # Pobranie nazw walut z  class Collection
-        currency_names = []
-        for currency in self.collection.get_items():
-            currency_names.append(currency.get_name())
+
 
 
     def update_conversion(self, event):
-        # Aktualizacja wyświetlanego wyniku
         try:
             amount1 = float(self.amount1.get())
             currency1 = self.currency1.get()
             currency2 = self.currency2.get()
-            exchange_rate1 = self.exchange_rates.get(currency1, 1)
-            exchange_rate2 = self.exchange_rates.get(currency2, 1)
-            converted_amount = amount1 * exchange_rate1 / exchange_rate2
-            self.result.config(text=f"{amount1} {currency1} = {converted_amount:.2f} {currency2}")
+            self.exchange.set_W1(currency1)
+            self.exchange.set_W2(currency2)
+            self.exchange.set_amount(amount1)
+            self.result.config(text=f"{amount1} {currency1} = {self.exchange.result():.2f} {currency2}")
         except ValueError:
             self.result.config(text="Błąd")
