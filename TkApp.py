@@ -5,7 +5,8 @@ from tkinter import ttk
 
 class TkApp:
     def __init__(self, root, collection, exchange):
-        self.currency_names = collection.get_curr_names()
+        self.currencies_dict = collection.get_dict()
+        self.currency_names = list(self.currencies_dict.keys())
         self.exchange = exchange
         self.root = root
         self.collection = collection
@@ -15,7 +16,7 @@ class TkApp:
         self.label_currency1.grid(row=0, column=0)
         self.currency1 = ttk.Combobox(root, values=self.currency_names)
         self.currency1.grid(row=0, column=1)
-        self.currency1.set("PLN")
+        self.currency1.set("USD")
         self.currency1.bind("<<ComboboxSelected>>", self.update_conversion)
 
         # Wybór drugiej waluty
@@ -40,17 +41,20 @@ class TkApp:
         self.result = ttk.Label(root, text="")
         self.result.grid(row=3, column=1)
 
-
-
-
     def update_conversion(self, event):
         try:
-            amount1 = float(self.amount1.get())
-            currency1 = self.currency1.get()
-            currency2 = self.currency2.get()
-            self.exchange.set_W1(currency1)
-            self.exchange.set_W2(currency2)
-            self.exchange.set_amount(amount1)
-            self.result.config(text=f"{amount1} {currency1} = {self.exchange.result():.2f} {currency2}")
+            amount1_str = self.amount1.get()
+            if amount1_str and float(amount1_str) > 0:  # Sprawdź, czy wpisano liczbę dodatnią
+                amount1 = float(amount1_str)
+                currency1 = self.currency1.get()
+                currency2 = self.currency2.get()
+                self.exchange.set_W1(self.currencies_dict[currency1])
+                self.exchange.set_W2(self.currencies_dict[currency2])
+                self.exchange.set_amount(amount1)
+                print(amount1)
+
+                # self.result.config(text=f"{amount1_str} {currency1} = {float(self.exchange.result()):.2f} {currency2}")
+            else:
+                self.result.config(text="Podaj poprawną ilość waluty 1")
         except ValueError:
-            self.result.config(text="Błąd")
+            self.result.config(text="Błąd - wprowadź liczbę")

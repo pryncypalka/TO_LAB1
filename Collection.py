@@ -27,8 +27,10 @@ class Collection:
             self.remove_item(currency)
         self.add_item(currency)
 
-    def get_curr_names(self):
-        currency_names = []
+    #function to get dictionary of currencies and their codes
+    def get_dict(self):
+        currency_dict = {}
         for currency in self._col:
-            currency_names.append(currency.get_name())
-        return currency_names
+            currency_dict[currency.get_code()] = currency
+        return currency_dict
+

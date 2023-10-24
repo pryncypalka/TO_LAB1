@@ -13,10 +13,12 @@ class Format:
     def get_collection(self):
         root = ET.fromstring(self._byte)
         col1 = Coll.Collection()
-        for child in root:
-            name = child[0].text
-            conversion_factor = child[1].text
-            code = child[2].text
-            exchange_rate = child[3].text
+        for pozycja in root.findall('.//pozycja'):
+            name = pozycja.find('nazwa_waluty').text
+            conversion_factor = pozycja.find('przelicznik').text
+            code = pozycja.find('kod_waluty').text
+            exchange_rate = pozycja.find('kurs_sredni').text
+
             col1.add_item(Curr.Currency(name, conversion_factor, code, exchange_rate))
+
         return col1

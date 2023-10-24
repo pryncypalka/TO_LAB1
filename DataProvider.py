@@ -19,6 +19,9 @@ class DataProvider:
 
         if response.status_code == 200:
             xml_content = response.content
+
+
             return xml_content
+
         else:
             print("Błąd podczas pobierania pliku XML")
