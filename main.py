@@ -1,9 +1,7 @@
-import DataProvider as DP
-
+import ProgramRunner as PR
 def main():
-    dp = DP.DataProvider()
-    dp.url = "https://www.nbp.pl/kursy/xml/lasta.xml"
-    dp.get_data()
+    pr = PR.ProgramRunner()
+    pr.run_app()
 
 
 

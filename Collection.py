@@ -1,7 +1,7 @@
 
 
 class Collection:
-    def __init__(self):
+    def __init__(self, ):
         self._col = []
 
     def get_item(self, currency):

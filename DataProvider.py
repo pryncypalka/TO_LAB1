@@ -5,11 +5,11 @@ class DataProvider:
     def __init__(self):
         self._url = ""
 
-    @property
-    def url(self):
+
+    def get_url(self):
         return self._url
-    @url.setter
-    def url(self, value):
+
+    def set_url(self, value):
         self._url = value
 
 

@@ -1,19 +1,22 @@
 import xml.etree.ElementTree as ET
+import Collection as Coll
+import Currency as Curr
+
 
 class Format:
-    def __init__(self):
-        self._byte = None
+    def __init__(self, byte=None):
+        self._byte = byte
 
-    @property
-    def byte(self):
-        return self._byte
-
-    @byte.setter
-    def byte(self, value):
+    def set_byte(self, value):
         self._byte = value
 
     def get_collection(self):
         root = ET.fromstring(self._byte)
-        print(ET.tostring(root, encoding="unicode"))
-
-
+        col1 = Coll.Collection()
+        for child in root:
+            name = child[0].text
+            conversion_factor = child[1].text
+            code = child[2].text
+            exchange_rate = child[3].text
+            col1.add_item(Curr.Currency(name, conversion_factor, code, exchange_rate))
+        return col1
