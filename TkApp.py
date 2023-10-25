@@ -1,6 +1,3 @@
-
-
-
 from tkinter import ttk
 
 class TkApp:
@@ -15,19 +12,21 @@ class TkApp:
         self.label_currency1 = ttk.Label(root, text="Waluta 1:")
         self.label_currency1.grid(row=0, column=0)
         self.currency1 = ttk.Combobox(root, values=self.currency_names)
+        self.currency1["state"] = "readonly"
         self.currency1.grid(row=0, column=1)
         self.currency1.set("USD")
         self.currency1.bind("<<ComboboxSelected>>", self.update_conversion)
 
-        # Wybór drugiej waluty
+
         self.label_currency2 = ttk.Label(root, text="Waluta 2:")
         self.label_currency2.grid(row=1, column=0)
         self.currency2 = ttk.Combobox(root, values=self.currency_names)
+        self.currency2["state"] = "readonly"
         self.currency2.grid(row=1, column=1)
         self.currency2.set("USD")
         self.currency2.bind("<<ComboboxSelected>>", self.update_conversion)
 
-        # Pole do wprowadzania ilości waluty 1
+
         self.label_amount1 = ttk.Label(root, text="Ilość waluty 1:")
         self.label_amount1.grid(row=2, column=0)
         self.amount1 = ttk.Entry(root)
@@ -51,10 +50,9 @@ class TkApp:
                 self.exchange.set_W1(self.currencies_dict[currency1])
                 self.exchange.set_W2(self.currencies_dict[currency2])
                 self.exchange.set_amount(amount1)
-                print(amount1)
 
-                # self.result.config(text=f"{amount1_str} {currency1} = {float(self.exchange.result()):.2f} {currency2}")
+                self.result.config(text=f"{amount1_str} {currency1} = {self.exchange.result()} {currency2}")
             else:
-                self.result.config(text="Podaj poprawną ilość waluty 1")
+                self.result.config(text="Podaj poprawną ilość waluty")
         except ValueError:
             self.result.config(text="Błąd - wprowadź liczbę")
