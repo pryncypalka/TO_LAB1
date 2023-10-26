@@ -20,5 +20,5 @@ class Format:
             exchange_rate = float(pozycja.find("kurs_sredni").text.replace(",", "."))
 
             col1.add_item(Curr.Currency(name, conversion_factor, code, exchange_rate))
-
+        col1.add_item(Curr.Currency("Polskie złoty", 1, "PLN", 1))
         return col1

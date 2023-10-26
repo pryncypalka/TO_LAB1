@@ -14,7 +14,7 @@ class TkApp:
         self.currency1 = ttk.Combobox(root, values=self.currency_names)
         self.currency1["state"] = "readonly"
         self.currency1.grid(row=0, column=1)
-        self.currency1.set("USD")
+        self.currency1.set("PLN")
         self.currency1.bind("<<ComboboxSelected>>", self.update_conversion)
 
 
