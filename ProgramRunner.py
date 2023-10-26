@@ -26,7 +26,7 @@ class ProgramRunner:
         collection1 = format1.get_collection()
         exchange1 = Exchange.Exchange()
         root = tk.Tk()
-        app = TkApp.TkApp(root, collection1, exchange1)
+        TkApp.TkApp(root, collection1, exchange1)
         root.mainloop()
 
 

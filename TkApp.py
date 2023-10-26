@@ -17,7 +17,6 @@ class TkApp:
         self.currency1.set("PLN")
         self.currency1.bind("<<ComboboxSelected>>", self.update_conversion)
 
-
         self.label_currency2 = ttk.Label(root, text="Waluta 2:")
         self.label_currency2.grid(row=1, column=0)
         self.currency2 = ttk.Combobox(root, values=self.currency_names)
